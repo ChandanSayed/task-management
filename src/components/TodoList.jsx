@@ -8,7 +8,7 @@ const initialTasks = [
   { id: 'task4', content: 'Research new marketing strategies', category: 'ongoing' },
   { id: 'task5', content: 'Finish report for Q4 sales', category: 'done' },
   { id: 'task6', content: 'Call Sarah regarding upcoming event', category: 'done' },
-  { id: 'task6', content: 'Call Sarah regarding upcoming event', category: 'todo' }
+  { id: 'task6', content: 'Call Sarah regarding upcoming event todo', category: 'todo' }
 ];
 
 const TodoList = () => {
@@ -28,7 +28,7 @@ const TodoList = () => {
     const updatedTasks = [...tasks];
     const task = updatedTasks.find(t => t.id === draggableId);
     task.category = destination.droppableId;
-
+    console.log(task.category, destination.droppableId);
     setTasks(updatedTasks);
   };
 
@@ -60,7 +60,7 @@ const TodoList = () => {
             <div className="category bg-blue-700 text-white md:w-1/3 p-4 rounded-sm" {...provided.droppableProps} ref={provided.innerRef}>
               <h2>Ongoing</h2>
               {tasks
-                .filter(task => task.category === 'done')
+                .filter(task => task.category === 'ongoing')
                 .map((task, index) => (
                   <Draggable key={task.id} draggableId={task.id} index={index}>
                     {provided => (
