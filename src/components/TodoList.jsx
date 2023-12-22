@@ -62,11 +62,11 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'todo')
                 .map((task, index) => (
-                  <Draggable key={task._id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                        <button className="btn" onClick={() => handleDelete(task.id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
@@ -88,11 +88,11 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'ongoing')
                 .map((task, index) => (
-                  <Draggable key={task._id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                        <button className="btn" onClick={() => handleDelete(task.id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
@@ -113,11 +113,11 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'done')
                 .map((task, index) => (
-                  <Draggable key={task._id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                        <button className="btn" onClick={() => handleDelete(task.id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
