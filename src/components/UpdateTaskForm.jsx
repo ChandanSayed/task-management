@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
-const TaskForm = () => {
-  const { loading, setLoading, tasks, setTasks, uId, setUpdateTaskList } = useContext(Context);
+const UpdateTaskForm = ({ updateInfo, setUpdateInfo, openPop, setOpenPop, setUpdateTaskList }) => {
+  const { loading, setLoading, tasks, setTasks, uId } = useContext(Context);
   const {
     register,
     trigger,
@@ -16,10 +16,12 @@ const TaskForm = () => {
 
   async function onSubmit(data) {
     const isValid = await trigger();
-    console.log({ ...data, status: 'todo' });
+    const { deadline, description, priority, title } = data;
     if (isValid) {
-      const res = await axios.post('/add-task', { ...data, category: 'todo', uId });
-      if (res.data.acknowledged) {
+      const res = await axios.put(`/tasks/update-task/${updateInfo._id}`, { deadline, description, priority, title });
+      if (res.data) {
+        setUpdateInfo({});
+        setOpenPop(false);
         setUpdateTaskList(prev => prev + 1);
         toast('Successfully Created!', {
           duration: 4000,
@@ -36,7 +38,7 @@ const TaskForm = () => {
         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
           Title
         </label>
-        <input {...register('title', { required: 'Title is required' })} id="title" type="text" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
+        <input value={updateInfo.title} {...register('title', { required: 'Title is required' })} id="title" type="text" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
         {errors.title && <span className="text-red-500 text-sm">{errors.title.message}</span>}
       </div>
 
@@ -44,7 +46,7 @@ const TaskForm = () => {
         <label htmlFor="description" className="block text-gray-700 font-bold mb-2">
           Description
         </label>
-        <textarea {...register('description', { required: 'Description is required' })} id="description" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
+        <textarea value={updateInfo.description} {...register('description', { required: 'Description is required' })} id="description" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
         {errors.description && <span className="text-red-500 text-sm">{errors.description.message}</span>}
       </div>
 
@@ -52,7 +54,7 @@ const TaskForm = () => {
         <label htmlFor="deadline" className="block text-gray-700 font-bold mb-2">
           Deadline
         </label>
-        <input {...register('deadline', { required: 'Deadline is required' })} id="deadline" type="date" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
+        <input value={updateInfo.deadline} {...register('deadline', { required: 'Deadline is required' })} id="deadline" type="date" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500" />
         {errors.deadline && <span className="text-red-500 text-sm">{errors.deadline.message}</span>}
       </div>
 
@@ -60,7 +62,7 @@ const TaskForm = () => {
         <label htmlFor="priority" className="block text-gray-700 font-bold mb-2">
           Priority
         </label>
-        <select {...register('priority', { required: 'Priority is required' })} id="priority" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
+        <select value={updateInfo.priority} {...register('priority', { required: 'Priority is required' })} id="priority" className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:border-blue-500">
           <option value="low">Low</option>
           <option value="moderate">Moderate</option>
           <option value="high">High</option>
@@ -75,4 +77,4 @@ const TaskForm = () => {
   );
 };
 
-export default TaskForm;
+export default UpdateTaskForm;

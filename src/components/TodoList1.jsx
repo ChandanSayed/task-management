@@ -49,7 +49,7 @@ export default function TodoList() {
   }, []);
 
   async function getTasks() {
-    const res = await axios.get(`http://localhost:5000/tasks/${uId}`);
+    const res = await axios.get(`/tasks/${uId}`);
     console.log(res);
     setAllTasks(res.data);
     const tasksIn = res.data.reduce((acc, obj) => {

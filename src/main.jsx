@@ -9,6 +9,9 @@ import Error from './components/Error.jsx';
 import PrivateRoute from './components/PrivateRoute.jsx';
 import Login from './components/Login.jsx';
 import Dashboard from './components/Dashboard.jsx';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'http://localhost:5000';
 
 const router = createBrowserRouter([
   {

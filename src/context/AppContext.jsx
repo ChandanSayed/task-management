@@ -10,6 +10,7 @@ export default function AppContext({ children }) {
   const [userPhoto, setUserPhoto] = useState('');
   const [loading, setLoading] = useState(true);
   const [setAllTasks, allTasks] = useState([]);
+  const [updateTaskList, setUpdateTaskList] = useState(0);
 
   const auth = getAuth(app);
   useEffect(() => {
@@ -29,5 +30,5 @@ export default function AppContext({ children }) {
       }
     });
   }, []);
-  return <Context.Provider value={{ setAllTasks, allTasks, user, userPhoto, setUser, setUserPhoto, loading, setLoading, uId }}>{children}</Context.Provider>;
+  return <Context.Provider value={{ updateTaskList, setUpdateTaskList, setAllTasks, allTasks, user, userPhoto, setUser, setUserPhoto, loading, setLoading, uId }}>{children}</Context.Provider>;
 }
