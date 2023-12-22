@@ -6,6 +6,7 @@ import { Context } from '../context/AppContext';
 import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import UpdateTaskForm from './UpdateTaskForm';
+import Swal from 'sweetalert2';
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -28,12 +29,19 @@ const TodoList = () => {
     setTasks(res.data);
     setInitialLoading(false);
 
-    const today = new Date().toISOString().split('T')[0];
-    const withTodayDate = await res.data.filter(list => list.deadline === today);
+    // const today = new Date().toISOString().split('T')[0]; international format
+    const today = new Date();
+    const formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
+    const withTodayDate = await res.data.filter(list => list.deadline === formattedDate);
     const deadlineToday = withTodayDate.filter(item => item.category !== 'done');
-
+    console.log(deadlineToday);
     if (deadlineToday.length > 0) {
       console.log('You have some tasks to complete today');
+      Swal.fire({
+        title: 'Remember!',
+        text: `You have ${deadlineToday.length} tasks to complete today!`,
+        icon: 'info'
+      });
     }
   }
 
@@ -176,7 +184,7 @@ const TodoList = () => {
           </Droppable>
         </div>
       </DragDropContext>
-      <div className={`h-screen flex flex-col items-center justify-center ${openPop ? 'block' : 'hidden'}`}>
+      <div className={`h-screen flex flex-col items-center justify-center fixed inset-0 bg-black bg-opacity-90 ${openPop ? 'block' : 'hidden'}`}>
         <UpdateTaskForm setUpdateTaskList={setUpdateTaskList} updateInfo={updateInfo} setUpdateInfo={setUpdateInfo} openPop={openPop} setOpenPop={setOpenPop} />
       </div>
     </>
