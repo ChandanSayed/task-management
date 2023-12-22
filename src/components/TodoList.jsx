@@ -76,12 +76,12 @@ const TodoList = () => {
                 .map((task, index) => (
                   <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
-                      <div className="task flex gap-2 flex-col md:flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        <div className="flex-1">
+                      <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <div className="flex-1 max-md:text-center">
                           <p>Task Title</p>
                           <p>{task.title}</p>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 max-md:text-center">
                           <p>Due date</p>
                           <p>{task.deadline}</p>
                         </div>
@@ -109,12 +109,12 @@ const TodoList = () => {
                 .map((task, index) => (
                   <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
-                      <div className="task flex gap-2 flex-col md:flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        <div className="flex-1">
+                      <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <div className="flex-1 max-md:text-center">
                           <p>Task Title</p>
                           <p>{task.title}</p>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 max-md:text-center">
                           <p>Due date</p>
                           <p>{task.deadline}</p>
                         </div>
@@ -141,12 +141,12 @@ const TodoList = () => {
                 .map((task, index) => (
                   <Draggable key={task._id} draggableId={task._id} index={index}>
                     {provided => (
-                      <div className="task flex gap-2 flex-col md:flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        <div className="flex-1">
+                      <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                        <div className="flex-1 max-md:text-center">
                           <p>Task Title</p>
                           <p>{task.title}</p>
                         </div>
-                        <div className="flex-1">
+                        <div className="flex-1 max-md:text-center">
                           <p>Due date</p>
                           <p>{task.deadline}</p>
                         </div>
