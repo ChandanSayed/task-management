@@ -39,8 +39,9 @@ const TodoList = () => {
     const task = updatedTasks.find(t => t._id === draggableId);
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
-    const res = axios.put(`http://localhost:5000/update-task-category/${task._id}`, { category: task.category });
-    console.log(res.data);
+    console.log(task);
+    // const res = axios.put(`http://localhost:5000/update-task-category/${task._id}`, { category: task.category });
+    // console.log(res.data);
     setTasks(updatedTasks);
   };
 
