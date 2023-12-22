@@ -35,7 +35,7 @@ const TodoList = () => {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="todo-list flex flex-col md:flex-row gap-10 container mx-auto p-4">
-        <Droppable droppableId="ongoing">
+        <Droppable droppableId="todo">
           {provided => (
             <div className="category bg-blue-700 text-white md:w-1/3 p-4 rounded-sm" {...provided.droppableProps} ref={provided.innerRef}>
               <h2>Todo</h2>
