@@ -16,6 +16,12 @@ const TodoList = () => {
   async function getTasks() {
     const res = await axios.get(`http://localhost:5000/tasks/${uId}`);
     console.log(res.data);
+    const matchList = res.data.find(list => {
+      if (new Date(list.deadline) == new Date()) {
+        console.log('Matched');
+      }
+    });
+    console.log(matchList);
     setTasks(res.data);
     setInitialLoading(false);
   }
@@ -40,7 +46,7 @@ const TodoList = () => {
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
     console.log(task);
-    const res = await axios.put(`http://localhost:5000//tasks/update-task-category/${task._id}`, { category: task.category });
+    const res = await axios.put(`http://localhost:5000/tasks/update-task-category/${task._id}`, { category: task.category });
     console.log(res.data);
     setTasks(updatedTasks);
   };
