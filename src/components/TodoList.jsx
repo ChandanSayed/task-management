@@ -7,6 +7,7 @@ import { FaRegEdit } from 'react-icons/fa';
 import { MdDeleteForever } from 'react-icons/md';
 import UpdateTaskForm from './UpdateTaskForm';
 import Swal from 'sweetalert2';
+import { motion } from 'framer-motion';
 
 const TodoList = () => {
   const [tasks, setTasks] = useState([]);
@@ -76,16 +77,16 @@ const TodoList = () => {
     const task = updatedTasks.find(t => t._id === draggableId);
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
-    console.log(task);
+    // console.log(task);
     const res = await axios.put(`/tasks/update-task-category/${task._id}`, { category: task.category });
-    console.log(res.data);
+    // console.log(res.data);
     setTasks(updatedTasks);
   };
 
   async function handleDelete(id) {
     console.log(id);
     const res = await axios.delete(`/tasks/${id}`);
-    console.log(res.data);
+    // console.log(res.data);
     if (res.data.deletedCount) {
       Swal.fire({
         title: 'Congrats!',
@@ -104,7 +105,17 @@ const TodoList = () => {
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <div className="todo-list flex flex-col md:flex-row gap-10 container mx-auto p-4">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
+          transition={{ duration: 0.5 }}
+          variants={{
+            hidden: { opacity: 0, x: -50 },
+            visible: { opacity: 1, x: 0 }
+          }}
+          className="todo-list flex flex-col md:flex-row gap-10 container mx-auto p-4"
+        >
           <Droppable droppableId="todo">
             {provided => (
               <div className="category bg-blue-700 text-white md:w-1/3 p-4 rounded-sm" {...provided.droppableProps} ref={provided.innerRef}>
@@ -220,7 +231,7 @@ const TodoList = () => {
               </div>
             )}
           </Droppable>
-        </div>
+        </motion.div>
       </DragDropContext>
       <div className={`h-screen flex flex-col items-center justify-center fixed inset-0 bg-black bg-opacity-90 ${openPop ? 'block' : 'hidden'}`}>
         <UpdateTaskForm setUpdateTaskList={setUpdateTaskList} updateInfo={updateInfo} setUpdateInfo={setUpdateInfo} openPop={openPop} setOpenPop={setOpenPop} />

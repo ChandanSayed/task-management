@@ -11,7 +11,7 @@ import Login from './components/Login.jsx';
 import Dashboard from './components/Dashboard.jsx';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+axios.defaults.baseURL = 'https://task-management-server-16zi.onrender.com';
 
 const router = createBrowserRouter([
   {
