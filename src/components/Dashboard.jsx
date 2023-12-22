@@ -9,7 +9,7 @@ const Dashboard = () => {
     setShowTab(index);
   }
   return (
-    <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
       <div className="bg-gray-800 text-white md:w-1/5">
         <div className="p-4">
           <h1 className="text-xl font-bold mb-4">Dashboard</h1>
