@@ -16,14 +16,14 @@ const TodoList = () => {
   const [updateInfo, setUpdateInfo] = useState({});
 
   useEffect(() => {
-    getTasks();
+    getTasksInitially();
   }, []);
 
   useEffect(() => {
     getTasks();
   }, [updateTaskList]);
 
-  async function getTasks() {
+  async function getTasksInitially() {
     const res = await axios.get(`/tasks/${uId}`);
 
     setTasks(res.data);
@@ -34,7 +34,7 @@ const TodoList = () => {
     const formattedDate = today.getFullYear() + '-' + (today.getMonth() + 1).toString().padStart(2, '0') + '-' + today.getDate().toString().padStart(2, '0');
     const withTodayDate = await res.data.filter(list => list.deadline === formattedDate);
     const deadlineToday = withTodayDate.filter(item => item.category !== 'done');
-    console.log(deadlineToday);
+
     if (deadlineToday.length > 0) {
       console.log('You have some tasks to complete today');
       Swal.fire({
@@ -42,7 +42,19 @@ const TodoList = () => {
         text: `You have ${deadlineToday.length} tasks to complete today!`,
         icon: 'info'
       });
+    } else {
+      Swal.fire({
+        title: 'Remember!',
+        text: `You haven't added any task, why not today!`,
+        icon: 'info'
+      });
     }
+  }
+  async function getTasks() {
+    const res = await axios.get(`/tasks/${uId}`);
+
+    setTasks(res.data);
+    setInitialLoading(false);
   }
 
   if (initialLoading) {
@@ -74,6 +86,14 @@ const TodoList = () => {
     console.log(id);
     const res = await axios.delete(`/tasks/${id}`);
     console.log(res.data);
+    if (res.data.deletedCount) {
+      Swal.fire({
+        title: 'Congrats!',
+        text: `Your task Successfully deleted!`,
+        icon: 'success'
+      });
+      setUpdateTaskList(prev => prev + 1);
+    }
   }
 
   function handleUpdate(task) {
@@ -94,21 +114,27 @@ const TodoList = () => {
                   .map((task, index) => (
                     <Draggable key={task._id} draggableId={task._id} index={index}>
                       {provided => (
-                        <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                          <div className="flex-1">
-                            <p>Task Title</p>
-                            <p>{task.title}</p>
+                        <div className="task mb-4" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                          <div className="flex gap-2 flex-row items-center justify-between">
+                            <div className="flex-1">
+                              <p>Task Title</p>
+                              <p>{task.title}</p>
+                            </div>
+                            <div className="flex-1">
+                              <p>Due date</p>
+                              <p>{task.deadline}</p>
+                            </div>
+                            <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
+                              <FaRegEdit />
+                            </button>
+                            <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
+                              <MdDeleteForever />
+                            </button>
                           </div>
-                          <div className="flex-1">
-                            <p>Due date</p>
-                            <p>{task.deadline}</p>
+                          <div>
+                            <p>Task Description</p>
+                            <p>{task.description}</p>
                           </div>
-                          <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
-                            <FaRegEdit />
-                          </button>
-                          <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
-                            <MdDeleteForever />
-                          </button>
                         </div>
                       )}
                     </Draggable>
@@ -127,21 +153,27 @@ const TodoList = () => {
                   .map((task, index) => (
                     <Draggable key={task._id} draggableId={task._id} index={index}>
                       {provided => (
-                        <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                          <div className="flex-1">
-                            <p>Task Title</p>
-                            <p>{task.title}</p>
+                        <div className="task mb-4" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                          <div className="flex gap-2 flex-row items-center justify-between">
+                            <div className="flex-1">
+                              <p>Task Title</p>
+                              <p>{task.title}</p>
+                            </div>
+                            <div className="flex-1">
+                              <p>Due date</p>
+                              <p>{task.deadline}</p>
+                            </div>
+                            <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
+                              <FaRegEdit />
+                            </button>
+                            <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
+                              <MdDeleteForever />
+                            </button>
                           </div>
-                          <div className="flex-1">
-                            <p>Due date</p>
-                            <p>{task.deadline}</p>
+                          <div className="">
+                            <p>Task description</p>
+                            <p>{task.description}</p>
                           </div>
-                          <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
-                            <FaRegEdit />
-                          </button>
-                          <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
-                            <MdDeleteForever />
-                          </button>
                         </div>
                       )}
                     </Draggable>
@@ -159,21 +191,27 @@ const TodoList = () => {
                   .map((task, index) => (
                     <Draggable key={task._id} draggableId={task._id} index={index}>
                       {provided => (
-                        <div className="task flex gap-2 flex-row items-center justify-between" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                          <div className="flex-1">
-                            <p>Task Title</p>
-                            <p>{task.title}</p>
+                        <div className="task mb-4" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+                          <div className=" flex gap-2 flex-row items-center justify-between">
+                            <div className="flex-1">
+                              <p>Task Title</p>
+                              <p>{task.title}</p>
+                            </div>
+                            <div className="flex-1">
+                              <p>Due date</p>
+                              <p>{task.deadline}</p>
+                            </div>
+                            <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
+                              <FaRegEdit />
+                            </button>
+                            <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
+                              <MdDeleteForever />
+                            </button>
                           </div>
                           <div className="flex-1">
-                            <p>Due date</p>
-                            <p>{task.deadline}</p>
+                            <p>Task Description</p>
+                            <p>{task.description}</p>
                           </div>
-                          <button onClick={() => handleUpdate(task)} className="btn ml-2 p-2 min-h-min h-auto">
-                            <FaRegEdit />
-                          </button>
-                          <button className="btn p-2 h-auto min-h-min" onClick={() => handleDelete(task._id)}>
-                            <MdDeleteForever />
-                          </button>
                         </div>
                       )}
                     </Draggable>

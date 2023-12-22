@@ -3,6 +3,7 @@ import { Context } from '../context/AppContext';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const TaskForm = () => {
   const { loading, setLoading, tasks, setTasks, uId, setUpdateTaskList } = useContext(Context);
@@ -21,9 +22,10 @@ const TaskForm = () => {
       const res = await axios.post('/add-task', { ...data, category: 'todo', uId });
       if (res.data.acknowledged) {
         setUpdateTaskList(prev => prev + 1);
-        toast('Successfully Created!', {
-          duration: 4000,
-          position: 'top-center'
+        Swal.fire({
+          title: 'Congrats!',
+          text: `Your task Successfully added!`,
+          icon: 'success'
         });
         reset();
       }

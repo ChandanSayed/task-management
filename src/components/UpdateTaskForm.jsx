@@ -3,6 +3,7 @@ import { Context } from '../context/AppContext';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const UpdateTaskForm = ({ updateInfo, setUpdateInfo, openPop, setOpenPop, setUpdateTaskList }) => {
   const { loading, setLoading, tasks, setTasks, uId } = useContext(Context);
@@ -23,9 +24,10 @@ const UpdateTaskForm = ({ updateInfo, setUpdateInfo, openPop, setOpenPop, setUpd
         setUpdateInfo({});
         setOpenPop(false);
         setUpdateTaskList(prev => prev + 1);
-        toast('Successfully Created!', {
-          duration: 4000,
-          position: 'top-center'
+        Swal.fire({
+          title: 'Congrats!',
+          text: `Your task Successfully updated!`,
+          icon: 'success'
         });
         reset();
       }
