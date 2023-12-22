@@ -28,7 +28,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="flex-1 p-10">
+      <div className="flex-1 px-4 md:p-10">
         <>
           <div className={`w-full ${showTab == 1 ? 'block' : 'hidden'}`}>
             <TaskForm />

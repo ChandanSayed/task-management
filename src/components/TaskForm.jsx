@@ -20,7 +20,6 @@ const TaskForm = () => {
     if (isValid) {
       const res = await axios.post('http://localhost:5000/add-task', { ...data, category: 'todo', uId });
       if (res.data.acknowledged) {
-        setTasks({ ...data, status: 'todo', uId, _id: res.data.insertedId });
         toast('Successfully Created!', {
           duration: 4000,
           position: 'top-center'

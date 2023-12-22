@@ -42,6 +42,16 @@ const TodoList = () => {
     setTasks(updatedTasks);
   };
 
+  async function handleDelete(id) {
+    console.log(id);
+    const res = await axios.delete(`http://localhost:5000/tasks/${id}`);
+    console.log(res.data);
+  }
+
+  function handleUpdate(task) {
+    console.log(task);
+  }
+
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <div className="todo-list flex flex-col md:flex-row gap-10 container mx-auto p-4">
@@ -55,7 +65,13 @@ const TodoList = () => {
                   <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.title}
+                        {task.title}{' '}
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                          Delete
+                        </button>
+                        <button onClick={() => handleUpdate(task)} className="btn ml-2">
+                          Button
+                        </button>
                       </div>
                     )}
                   </Draggable>
@@ -75,7 +91,13 @@ const TodoList = () => {
                   <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.title}
+                        {task.title}{' '}
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                          Delete
+                        </button>
+                        <button onClick={() => handleUpdate(task)} className="btn ml-2">
+                          Button
+                        </button>
                       </div>
                     )}
                   </Draggable>
@@ -94,7 +116,13 @@ const TodoList = () => {
                   <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.title}
+                        {task.title}{' '}
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
+                          Delete
+                        </button>
+                        <button onClick={() => handleUpdate(task)} className="btn ml-2">
+                          Button
+                        </button>
                       </div>
                     )}
                   </Draggable>
