@@ -36,7 +36,7 @@ const TodoList = () => {
     }
 
     const updatedTasks = [...tasks];
-    const task = updatedTasks.find(t => t.id === draggableId);
+    const task = updatedTasks.find(t => t._id === draggableId);
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
     setTasks(updatedTasks);
@@ -66,7 +66,7 @@ const TodoList = () => {
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task.id)}>
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
@@ -92,7 +92,7 @@ const TodoList = () => {
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task.id)}>
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
@@ -117,7 +117,7 @@ const TodoList = () => {
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
                         {task.title}{' '}
-                        <button className="btn" onClick={() => handleDelete(task.id)}>
+                        <button className="btn" onClick={() => handleDelete(task._id)}>
                           Delete
                         </button>
                         <button onClick={() => handleUpdate(task)} className="btn ml-2">
