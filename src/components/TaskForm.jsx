@@ -2,9 +2,10 @@ import React, { useContext } from 'react';
 import { Context } from '../context/AppContext';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 const TaskForm = () => {
-  const { loading, setLoading, tasks, setTasks } = useContext(Context);
+  const { loading, setLoading, tasks, setTasks, uId } = useContext(Context);
   const {
     register,
     trigger,
@@ -17,11 +18,15 @@ const TaskForm = () => {
     const isValid = await trigger();
     console.log({ ...data, status: 'todo' });
     if (isValid) {
-      toast('Successfully Created!', {
-        duration: 4000,
-        position: 'top-center'
-      });
-      reset();
+      const res = await axios.post('http://localhost:5000/add-task', { ...data, status: 'todo', uId });
+      if (res.data.acknowledged) {
+        setTasks({ ...data, status: 'todo', uId, _id: res.data.insertedId });
+        toast('Successfully Created!', {
+          duration: 4000,
+          position: 'top-center'
+        });
+        reset();
+      }
     }
   }
 
