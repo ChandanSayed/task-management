@@ -40,7 +40,7 @@ const TodoList = () => {
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
     console.log(task);
-    const res = await axios.put(`http://localhost:5000/update-task-category/${task._id}`, { category: task.category });
+    const res = await axios.put(`http://localhost:5000//tasks/update-task-category/${task._id}`, { category: task.category });
     console.log(res.data);
     setTasks(updatedTasks);
   };
