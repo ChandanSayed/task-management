@@ -24,7 +24,7 @@ const TodoList = () => {
     return <Loader />;
   }
 
-  const onDragEnd = result => {
+  const onDragEnd = async result => {
     const { destination, source, draggableId } = result;
 
     if (!destination) {
@@ -40,8 +40,8 @@ const TodoList = () => {
     task.category = destination.droppableId;
     console.log(task.category, destination.droppableId, updatedTasks);
     console.log(task);
-    // const res = axios.put(`http://localhost:5000/update-task-category/${task._id}`, { category: task.category });
-    // console.log(res.data);
+    const res = await axios.put(`http://localhost:5000/update-task-category/${task._id}`, { category: task.category });
+    console.log(res.data);
     setTasks(updatedTasks);
   };
 
