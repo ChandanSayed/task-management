@@ -1,12 +1,11 @@
 import React from 'react';
-import TaskForm from './TaskForm';
-import ToDoList from './TodoList';
+
+import Banner from './Banner';
 
 const Home = () => {
   return (
     <>
-      <TaskForm />
-      <ToDoList />
+      <Banner />
     </>
   );
 };

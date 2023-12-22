@@ -18,7 +18,7 @@ const TaskForm = () => {
     const isValid = await trigger();
     console.log({ ...data, status: 'todo' });
     if (isValid) {
-      const res = await axios.post('http://localhost:5000/add-task', { ...data, status: 'todo', uId });
+      const res = await axios.post('http://localhost:5000/add-task', { ...data, category: 'todo', uId });
       if (res.data.acknowledged) {
         setTasks({ ...data, status: 'todo', uId, _id: res.data.insertedId });
         toast('Successfully Created!', {
@@ -31,7 +31,7 @@ const TaskForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto">
+    <form onSubmit={handleSubmit(onSubmit)} className="max-w-md mx-auto shadow-xl p-6 rounded-lg">
       <div className="mb-4">
         <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
           Title

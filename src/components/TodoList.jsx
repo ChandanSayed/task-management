@@ -1,18 +1,28 @@
-import React, { useState } from 'react';
+import axios from 'axios';
+import React, { useContext, useEffect, useState } from 'react';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-
-const initialTasks = [
-  { id: 'task1', content: 'Complete project proposal', category: 'ongoing' },
-  { id: 'task2', content: 'Read chapters 5-7 of "The Great Gatsby"', category: 'ongoing' },
-  { id: 'task3', content: 'Prepare presentation slides for meeting', category: 'ongoing' },
-  { id: 'task4', content: 'Research new marketing strategies', category: 'ongoing' },
-  { id: 'task5', content: 'Finish report for Q4 sales', category: 'done' },
-  { id: 'task6', content: 'Call Sarah regarding upcoming event', category: 'done' },
-  { id: 'task6', content: 'Call Sarah regarding upcoming event todo', category: 'todo' }
-];
+import Loader from './Loader';
+import { Context } from '../context/AppContext';
 
 const TodoList = () => {
-  const [tasks, setTasks] = useState(initialTasks);
+  const [tasks, setTasks] = useState([]);
+  const [initialLoading, setInitialLoading] = useState(true);
+  const { loading, setLoading, uId, allTasks, setAllTasks } = useContext(Context);
+
+  useEffect(() => {
+    getTasks();
+  }, []);
+
+  async function getTasks() {
+    const res = await axios.get(`http://localhost:5000/tasks/${uId}`);
+    console.log(res.data);
+    setTasks(res.data);
+    setInitialLoading(false);
+  }
+
+  if (initialLoading) {
+    return <Loader />;
+  }
 
   const onDragEnd = result => {
     const { destination, source, draggableId } = result;
@@ -28,7 +38,7 @@ const TodoList = () => {
     const updatedTasks = [...tasks];
     const task = updatedTasks.find(t => t.id === draggableId);
     task.category = destination.droppableId;
-    console.log(task.category, destination.droppableId);
+    console.log(task.category, destination.droppableId, updatedTasks);
     setTasks(updatedTasks);
   };
 
@@ -42,10 +52,10 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'todo')
                 .map((task, index) => (
-                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.content}
+                        {task.title}
                       </div>
                     )}
                   </Draggable>
@@ -62,10 +72,10 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'ongoing')
                 .map((task, index) => (
-                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.content}
+                        {task.title}
                       </div>
                     )}
                   </Draggable>
@@ -81,10 +91,10 @@ const TodoList = () => {
               {tasks
                 .filter(task => task.category === 'done')
                 .map((task, index) => (
-                  <Draggable key={task.id} draggableId={task.id} index={index}>
+                  <Draggable key={task._id} draggableId={task.id} index={index}>
                     {provided => (
                       <div className="task" {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
-                        {task.content}
+                        {task.title}
                       </div>
                     )}
                   </Draggable>
