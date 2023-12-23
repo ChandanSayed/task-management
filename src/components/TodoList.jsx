@@ -43,7 +43,8 @@ const TodoList = () => {
         text: `You have ${deadlineToday.length} tasks to complete today!`,
         icon: 'info'
       });
-    } else {
+    }
+    if (res.data.length < 1) {
       Swal.fire({
         title: 'Remember!',
         text: `You haven't added any task, why not today!`,
